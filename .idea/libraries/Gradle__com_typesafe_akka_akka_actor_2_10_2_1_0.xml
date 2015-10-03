@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.typesafe.akka:akka-actor_2.10:2.1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.10/2.1.0/162351635eb6375db00bfb6627cfe154616b5d2a/akka-actor_2.10-2.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.10/2.1.0/66a5d7b81c40772ff2c2d98ca675ea83cb881608/akka-actor_2.10-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

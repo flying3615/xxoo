@@ -1,0 +1,19 @@
+group 'jiandan'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+//    mavenCentral()
+    maven {
+        url "http://maven.oschina.net/content/groups/public/"
+    }
+}
+
+dependencies {
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.6.3'
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.11', version: '2.4.0'
+    compile group: 'commons-io',name: 'commons-io', version: '2.4'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
