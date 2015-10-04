@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args){
         ActorSystem system = ActorSystem.create("JanDanSystem");
-        ActorRef JiandanActor = system.actorOf(Props.create(JiandanActor.class));
+        ActorRef JiandanActor = system.actorOf(Props.create(JiandanActor.class),"jiandan");
         JiandanActor.tell("start",JiandanActor);
     }
 }

@@ -1,3 +1,4 @@
+import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import org.apache.commons.io.FileUtils;
 
@@ -8,12 +9,14 @@ import java.net.URL;
  * Created by centling on 2015/10/3.
  */
 public class PicActor extends UntypedActor {
+
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof String){
             boolean flag = download((String)message,"./img/");
             if(flag){
-                System.out.printf("------download %s successfully------\n",message);
+                getContext().actorSelection("/user/jiandan").tell("save",getSelf());
+
             }else{
                 System.out.printf("------download %s failed------\n",message);
             }
@@ -26,7 +29,6 @@ public class PicActor extends UntypedActor {
         try {
             URL httpurl = new URL(url);
             String fileName = getFileNameFromUrl(url);
-            System.out.println(fileName);
             File f = new File(dir + fileName);
             FileUtils.copyURLToFile(httpurl, f);
         } catch (Exception e) {
