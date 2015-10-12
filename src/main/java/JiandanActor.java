@@ -47,7 +47,7 @@ public class JiandanActor extends UntypedActor {
     @Override
     public void onReceive(Object message) throws Exception {
         if("start".equals(message)){
-            ActorRef html = getContext().actorOf(Props.create(HtmlActor.class).withDispatcher("my-dispatcher"), "html");
+            ActorRef html = getContext().actorOf(Props.create(HtmlActor.class), "html");
             Message msg = new Message("http://jandan.net/ooxx","start",userAgents[userAgentIndex]);
             html.tell(msg,getSelf());
         }else if("save".equals(message)){

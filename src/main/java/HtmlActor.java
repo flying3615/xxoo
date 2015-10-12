@@ -13,8 +13,6 @@ import java.io.IOException;
  */
 public class HtmlActor extends UntypedActor {
 
-    int userAgentIndex = 0;
-
 
     @Override
     public void postRestart(Throwable reason) throws Exception {
