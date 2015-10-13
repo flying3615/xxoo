@@ -27,6 +27,8 @@ public class Main {
 
         ActorSystem actorSystem = ActorSystem.create();
         ActorRef answerActor = actorSystem.actorOf(Props.create(AnswerActor.class), "AnswerActor");
+        //time out need to be greater than answer actor' future process time
+        //so that it can be successful
         Timeout timeout = new Timeout(Duration.create(2,"seconds"));
         String message = "Hello";
         Future<Object> future = Patterns.ask(answerActor, message, timeout);
