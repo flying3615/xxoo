@@ -8,6 +8,7 @@ import akka.dispatch.OnSuccess;
 public class PrintResult extends OnSuccess {
     @Override
     public void onSuccess(Object result) throws Throwable {
+        System.out.println("in on success handler");
         System.out.println(result);
     }
 }

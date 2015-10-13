@@ -32,6 +32,7 @@ public class Main {
         Future<Object> future = Patterns.ask(answerActor, message, timeout);
         try {
             future.onSuccess(new PrintResult(), actorSystem.dispatcher());
+            future.onFailure(new PrintException(), actorSystem.dispatcher());
         } catch (Exception e) {
             e.printStackTrace();
         }
