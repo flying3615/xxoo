@@ -3,19 +3,10 @@ package future;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.dispatch.ExecutionContexts;
-import akka.dispatch.Futures;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
-import scala.concurrent.Await;
-import scala.concurrent.ExecutionContext;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static scala.concurrent.Await.*;
 
 
 /**
