@@ -1,14 +1,14 @@
-package future;
+package AskActor;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.PoisonPill;
 import akka.actor.Props;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
+import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
-
-import java.util.concurrent.CountDownLatch;
 
 
 /**
@@ -20,24 +20,20 @@ public class Main {
 
         ActorSystem actorSystem = ActorSystem.create();
         ActorRef answerActor = actorSystem.actorOf(Props.create(AnswerActor.class), "AnswerActor");
-        CountDownLatch countDownLatch = new CountDownLatch(1);
-        //time out need to be greater than answer actor' future process time
-        //so that it can be successful
+
         Timeout timeout = new Timeout(Duration.create(5,"seconds"));
         String message = "Hello";
         Future<Object> future = Patterns.ask(answerActor, message, timeout);
         try {
-            future.onSuccess(new PrintResult(countDownLatch), actorSystem.dispatcher());
-            future.onFailure(new PrintException(countDownLatch), actorSystem.dispatcher());
-            //wait for handler process finish
-//            countDownLatch.await();
-            System.out.println("SwapperMain:after waiting");
+            String result = (String)Await.result(future,Duration.Inf());
+            System.out.println("SwapperMain: get result " + result);
+
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-//            actorSystem.shutdown();
+            answerActor.tell(PoisonPill.getInstance(), null);
+            System.out.printf("SwapperMain: get actor %s again after being killed\n", actorSystem.actorSelection("/user/AnswerActor"));
+            actorSystem.shutdown();
         }
-
-
     }
 }

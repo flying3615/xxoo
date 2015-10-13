@@ -14,5 +14,6 @@ public class Main {
         final Inbox inbox = Inbox.create(system);
         ActorRef JiandanActor = system.actorOf(Props.create(JiandanActor.class),"jiandan");
         inbox.send(JiandanActor,"start");
+
     }
 }

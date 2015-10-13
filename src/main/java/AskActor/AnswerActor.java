@@ -1,4 +1,4 @@
-package future;
+package AskActor;
 
 import akka.actor.UntypedActor;
 import akka.dispatch.ExecutionContexts;
@@ -6,8 +6,8 @@ import akka.dispatch.Futures;
 import akka.pattern.Patterns;
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.Future;
+import scala.concurrent.duration.Duration;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,31 +17,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class AnswerActor extends UntypedActor {
 
-    ExecutorService poll = Executors.newCachedThreadPool();
-    ExecutionContext ec = ExecutionContexts.fromExecutorService(poll);
+    public AnswerActor(){
+        getContext().setReceiveTimeout(Duration.create(1,TimeUnit.MILLISECONDS));
+    }
 
     @Override
     public void onReceive(Object message) throws Exception {
         String messageStr = (String)message;
         if("Hello".equals(messageStr)){
 
-            Future<String> f1 = akka.dispatch.Futures.future(() -> {
-                System.out.println("AnswerActor:begin sleep 3 seconds");
-                TimeUnit.SECONDS.sleep(3);
-                System.out.println("AnswerActor:after sleep 3 seconds");
-                return "Hello from Future";
-            },ec);
-
-            //send futures back to sender
-            Patterns.pipe(f1, ec).to(getSender());
-
-        }
-
+            getSender().tell("AnswerActor: greeting from answer actor",getSelf());
+        }else
+            unhandled(message);
     }
-
 
     @Override
     public void postStop() throws Exception {
-        poll.shutdown();
+        System.out.println("AnswerActor: invoke stop");
     }
 }
