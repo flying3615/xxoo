@@ -27,7 +27,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         //第一会所
-        String encodeRes = URLEncoder.encode("anjelica", "UTF-8");
+        String encodeRes = URLEncoder.encode("第一会所", "UTF-8");
         String url = "http://www.torrentkitty.net/search/" + encodeRes + "/";
         ActorSystem system = ActorSystem.create("torrentKittySystem");
         final Inbox inbox = Inbox.create(system);
