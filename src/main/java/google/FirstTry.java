@@ -51,6 +51,22 @@ public class FirstTry {
         out.close();
     }
 
+    public static String[] getRes(Element result){
+        String[] res = {
+                result.getElementsByTag("a").get(0).attr("href"),
+                result.getElementsByTag("a").get(0).text()
+        };
+        return res;
+    }
+
+    public static void writeToFile(String[] res){
+        try {
+            out.write(res[1] + " " + res[0] + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void getPage(String url) throws IOException {
         Document doc = Jsoup.connect(url)
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36")
@@ -60,21 +76,8 @@ public class FirstTry {
         Elements results = doc.getElementsByAttributeValue("class", "g");
 
         results.stream()
-                .map(result -> {
-                            String[] res = {
-                                    result.getElementsByTag("a").get(0).attr("href"),
-                                    result.getElementsByTag("a").get(0).text()
-                            };
-                            return res;
-                        }
-                )
-                .forEach(res -> {
-                    try {
-                        out.write(res[1] +" " + res[0] + "\n");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                .map(FirstTry::getRes)
+                .forEach(FirstTry::writeToFile);
 
 //        for (Element result : results) {
 //            Element a_result = result.getElementsByTag("a").get(0);
